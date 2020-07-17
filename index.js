@@ -16,7 +16,6 @@ async function run() {
       `/property:Configuration=${BUILDCONFIGURATION}`,
       `/property:Platform=${BUILDPLATFORM}`,
     ]);
-    await exec.exec("ls", [BUILDDIRECTORY]);
   } catch (error) {
     core.setFailed(error.message);
   }
