@@ -10,7 +10,7 @@ const BuildSolution = `${PROJECT}.visualstudio/${PROJECT}.sln`;
 
 async function run() {
   try {
-    await exec.exec(`powershell.exe ${__dirname}\build.ps1`);
+    await exec.exec(`powershell.exe`, [`${__dirname}/build.ps1`]);
 
     await exec.exec("Write-Host", [BuildSolution]);
     await exec.exec("set");
