@@ -13,8 +13,8 @@ async function run() {
     // await exec.exec("cmd", ["set"]);
     await exec.exec("MSBuild", [
       BuildSolution,
-      `property:Configuration=${BUILDCONFIGURATION}`,
-      `property:Platform=${BUILDPLATFORM}`,
+      `\\property:Configuration=${BUILDCONFIGURATION}`,
+      `\\property:Platform=${BUILDPLATFORM}`,
     ]);
     await exec.exec("ls", [BUILDDIRECTORY]);
   } catch (error) {
