@@ -10,7 +10,7 @@ const BuildSolution = `${PROJECT}.visualstudio\\${PROJECT}.sln`;
 
 async function run() {
   try {
-    await exec.exec("set");
+    await exec.exec("cmd", ["set"]);
     await exec.exec("MSBuild", [
       BuildSolution,
       `property:Configuration=${BUILDCONFIGURATION}`,
