@@ -16,8 +16,7 @@ async function run() {
       `/property:Configuration=${BUILDCONFIGURATION}`,
       `/property:Platform=${BUILDPLATFORM}`,
     ]);
-
-    core.setOutput("buildDirectory", `Build`);
+    core.exportVariable('UPLOAD_DIR', 'Build');
   } catch (error) {
     core.setFailed(error.message);
   }
