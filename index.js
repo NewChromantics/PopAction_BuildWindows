@@ -16,6 +16,8 @@ async function run() {
       `/property:Configuration=${BUILDCONFIGURATION}`,
       `/property:Platform=${BUILDPLATFORM}`,
     ]);
+
+    core.exportVariable('UPLOAD_NAME', 'windows');
     core.exportVariable('UPLOAD_DIR', 'Build');
   } catch (error) {
     core.setFailed(error.message);
