@@ -16,7 +16,7 @@ async function run() {
     try
     {
       console.log(`Restoring nuget packages...`);
-      await exec.exec("nuget restore %BuildSolution%", ['restore',BuildSolution] );
+      await exec.exec("nuget", ['restore',BuildSolution] );
     }
     catch(e)
     {
