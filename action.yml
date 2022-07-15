@@ -4,10 +4,12 @@ inputs:
     required: true
   BuildConfiguration: 
     required: true
-  BuildDirectory: 
+  OutputDirectory:
     required: true
   Project:
-    required: true
+    required: false
+  BuildSolution:
+    required: false
 runs:
   using: 'node12'
   main: 'index.js'
