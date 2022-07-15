@@ -3,13 +3,17 @@ const exec = require("@actions/exec");
 
 const BUILDPLATFORM = core.getInput("BuildPlatform");
 const BUILDCONFIGURATION = core.getInput("BuildConfiguration");
-const BUILDDIRECTORY = core.getInput("BuildDirectory");
 const PROJECT = core.getInput("Project");
 const BuildSolution = core.getInput("BuildSolution") || `${PROJECT}.visualstudio\\${PROJECT}.sln`;
 
-async function run() {
-  try {
-    
+//	there doesnt seem to be a way to nicely extract (other than regex) the output dir, so instead, we specify it in the commandline
+const OutputDirectory = core.getInput("OutputDirectory") || false;
+
+async function run() 
+{
+		if ( !OutputDirectory )
+				throw `OutputDirectory needs to be specified; this sets the Msbuild OutDir`;
+	
     //  execute nuget restore to restore any packages (if packages.config is present) in the solution
     //  nuget isn't automatically installed (and it's NOT in the github runners) so this can fail
     //  Show a prompt if it fails
@@ -31,13 +35,13 @@ async function run() {
       BuildSolution,
       `/property:Configuration=${BUILDCONFIGURATION}`,
       `/property:Platform=${BUILDPLATFORM}`,
+			`/property:OutDir=${OutputDirectory}`
     ]);
 
+		//	todo: redo this name to something more meaningful, if required at all
     core.exportVariable('UPLOAD_NAME', 'windows');
-    core.exportVariable('UPLOAD_DIR', 'Build');
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+    core.exportVariable('UPLOAD_DIR', OutputDirectory );
+  
 }
 
-run();
+run().catch( (error) => core.setFailed(error.message) );
