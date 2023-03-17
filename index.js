@@ -40,9 +40,9 @@ async function run()
 					]
 	);
 
-	//	todo: redo this name to something more meaningful, if required at all
-	core.exportVariable('UPLOAD_NAME', 'windows');
-	core.exportVariable('UPLOAD_DIR', OutputDirectory );
+	//	todo: this name should be the final output EXE/DLL
+	core.setOutput('UPLOAD_NAME', 'windows');
+	core.setOutput('UPLOAD_DIR', OutputDirectory );
 }
 
 run().catch( (error) => core.setFailed(error.message) );
