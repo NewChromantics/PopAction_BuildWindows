@@ -30,13 +30,16 @@ async function run()
 		console.log(`  uses: warrenbuckley/Setup-Nuget@v1`);
 	}
 
+	//	with outdir last, msbuild is still adding /Project/ to out dir
+	//	fix by making sure OutDir is first
+	//	https://stackoverflow.com/questions/4965507/msbuild-poutputdir-c-mydir-being-ignored
 	// await exec.exec("cmd", ["set"]);
 	await exec.exec("MSBuild",
 					[
 						BuildSolution,
+						`/property:OutDir=${OutputDirectory}`,
 						`/property:Configuration=${BUILDCONFIGURATION}`,
 						`/property:Platform=${BUILDPLATFORM}`,
-						`/property:OutDir=${OutputDirectory}`
 					]
 	);
 
