@@ -33,11 +33,18 @@ async function run()
 	//	with outdir last, msbuild is still adding /Project/ to out dir
 	//	fix by making sure OutDir is first
 	//	https://stackoverflow.com/questions/4965507/msbuild-poutputdir-c-mydir-being-ignored
+	//	... but this didn't fix UWP (and maybe .net?) projects
+	//	https://stackoverflow.com/a/23352408
+	//	.net projects (and uwp) have another option, hidden in the XML (no property in visual studio UI)
+	//	this property turns it off, and outdir is now explicit
+	//		/property:GenerateProjectSpecificOutputFolder=false
+
 	// await exec.exec("cmd", ["set"]);
 	await exec.exec("MSBuild",
 					[
 						BuildSolution,
 						`/property:OutDir=${OutputDirectory}`,
+						`/property:GenerateProjectSpecificOutputFolder=false`,
 						`/property:Configuration=${BUILDCONFIGURATION}`,
 						`/property:Platform=${BUILDPLATFORM}`,
 					]
