@@ -51,6 +51,8 @@ async function run()
 	);
 
 	//	todo: this name should be the final output EXE/DLL
+	//	todo: output dir, if not absolute, will be in the solution dir (not current working dir)
+	//			we need to resolve this so UPLOAD_DIR is accurate
 	core.setOutput('UPLOAD_NAME', 'windows');
 	core.setOutput('UPLOAD_DIR', OutputDirectory );
 }
