@@ -4,6 +4,12 @@ Build visual studio project action
 Requried Inputs
 ----------
 - `OutputDirectory` Directory to build artifacts to, passed into `msbuild` with `/property:OutDir=${OutputDirectory}`
+- `BuildSolution` Path to `.sln` 
+- `BuildConfiguration` Solution configuration.
+- `BuildPlatform` Solution Platform.
+
+The action will run
+`MSBuild ${BuildSolution} /property:OutDir=${OutputDirectory} /property:Configuration=${BuildConfiguration} /property:Platform=${BuildPlatform}`
 
 Outputs
 --------

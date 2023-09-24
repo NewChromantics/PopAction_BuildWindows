@@ -6,10 +6,8 @@ inputs:
     required: true
   OutputDirectory:
     required: true
-  Project:
-    required: false
   BuildSolution:
-    required: false
+    required: true
 runs:
   using: 'node12'
   main: 'index.js'

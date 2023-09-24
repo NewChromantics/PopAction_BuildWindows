@@ -1,18 +1,26 @@
 const core = require("@actions/core");
 const exec = require("@actions/exec");
 
-const BUILDPLATFORM = core.getInput("BuildPlatform");
-const BUILDCONFIGURATION = core.getInput("BuildConfiguration");
-const PROJECT = core.getInput("Project");
-const BuildSolution = core.getInput("BuildSolution") || `${PROJECT}.visualstudio\\${PROJECT}.sln`;
+const BuildSolution = core.getInput("BuildSolution");
+const BuildPlatform = core.getInput("BuildPlatform");
+const BuildConfiguration = core.getInput("BuildConfiguration");
 
 //	there doesnt seem to be a way to nicely extract (other than regex) the output dir, so instead, we specify it in the commandline
-const OutputDirectory = core.getInput("OutputDirectory") || false;
+const OutputDirectory = core.getInput("OutputDirectory");
 
 async function run()
 {
 	if ( !OutputDirectory )
 		throw `OutputDirectory needs to be specified; this sets the Msbuild OutDir`;
+
+	if ( !BuildSolution )
+		throw `BuildSolution needs to be specified (Path to .sln)`;
+
+	if ( !BuildConfiguration )
+		throw `BuildConfiguration needs to be specified`;
+
+	if ( !BuildPlatform )
+		throw `BuildPlatform needs to be specified`;
 
 	//  execute nuget restore to restore any packages (if packages.config is present) in the solution
 	//  nuget isn't automatically installed (and it's NOT in the github runners) so this can fail
@@ -45,8 +53,8 @@ async function run()
 						BuildSolution,
 						`/property:OutDir=${OutputDirectory}`,
 						`/property:GenerateProjectSpecificOutputFolder=false`,
-						`/property:Configuration=${BUILDCONFIGURATION}`,
-						`/property:Platform=${BUILDPLATFORM}`,
+						`/property:Configuration=${BuildConfiguration}`,
+						`/property:Platform=${BuildPlatform}`,
 					]
 	);
 
